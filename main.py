@@ -10,10 +10,13 @@ def start_screen(stdscr):
     stdscr.refresh()
     stdscr.getkey()
 
+
 # Display the currently typed text on top of the target text, also display the WPM / Score.
 def display_text(stdscr, target, current, wpm=0):
     stdscr.addstr(target)
     stdscr.addstr(1,0, f"WPM: {wpm}")
+    stdscr.addstr(4,0, "PRESS ESC TO EXIT")
+    stdscr.addstr(0,0, "")
 
     for i, char in enumerate(current):
         correct_char = target[i]
@@ -80,5 +83,6 @@ def main(stdscr):
         key = stdscr.getkey()
         if ord(key) == 27:
             break
-    
+
+
 wrapper(main)
