@@ -14,23 +14,26 @@ def wpm_test(stdscr):
     target_text = "Hello world this is test text!"
     current_text = []
         
+    # Display all typed text on top of the target text.
     # Each time a key is entered, evalutate and display it. At the end calculate the score/speed.
     while True:
-        key = stdscr.getkey()
-        
-        #Exit if Escape is pressed.
-        if ord(key) == 27:
-            break
-                
-        current_text.append(key)
         stdscr.clear()
-        
         stdscr.addstr(target_text)
     
         for char in current_text:
             stdscr.addstr(char, curses.color_pair(1))
         
         stdscr.refresh()
+        
+        key = stdscr.getkey()
+        
+        if ord(key) == 27:
+            break   #Exit if Escape is pressed.
+        if key in ("KEY_BACKSPACE", "\b", "\x7f"):
+            if len(current_text) > 0:
+                current_text.pop()
+        else:
+            current_text.append(key)
 
 
 def main(stdscr):
