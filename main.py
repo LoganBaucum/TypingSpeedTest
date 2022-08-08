@@ -56,13 +56,18 @@ def wpm_test(stdscr):
             stdscr.nodelay(False)
             break
         
+        # Full sentence typed, end game / break
+        # if len(current_text) == len(target_text):
+        #     stdscr.nodelay(False)
+        #     break
+        
         # Wait for input       
         try:
             key = stdscr.getkey()
         except:
             continue
         
-        # Exit if Escape is pressed. 
+        # Escape to exit. 
         if ord(key) == 27: 
             break
         # Backspace functionality
