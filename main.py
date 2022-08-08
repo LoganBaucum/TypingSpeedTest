@@ -1,6 +1,7 @@
 import curses
 from curses import wrapper
 import time
+import random
 
 # Displays text to welcome the player and start the game.
 def start_screen(stdscr):
@@ -26,10 +27,16 @@ def display_text(stdscr, target, current, wpm=0):
         
         stdscr.addstr(0, i, char, textcolor)
             
+# Returns a random sentence from the text files
+def load_text():
+    with open("text.txt", "r") as f:
+        lines = f.readlines()
+        return random.choice(lines).strip()
+
 
 # Typing game functionality
 def wpm_test(stdscr):
-    target_text = "Hello world this is a test!"
+    target_text = load_text()
     current_text = []
     wpm = 0
     start_time = time.time()
