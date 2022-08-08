@@ -26,7 +26,7 @@ def display_text(stdscr, target, current, wpm=0):
 
 # Typging game functionality
 def wpm_test(stdscr):
-    target_text = "Hello world this is test text!"
+    target_text = "Hello world this is a test!"
     current_text = []
     wpm = 0
     start_time = time.time()
@@ -35,17 +35,22 @@ def wpm_test(stdscr):
     # Each time a key is entered, evalutate and display it. At the end calculate the score/speed.
     while True:
         time_elapsed = max(time.time() - start_time, 1)
-        wpm = round(len(current_text) / (time_elapsed / 60) ) / 5
+        wpm = round((len(current_text) / (time_elapsed / 60) ) / 5)
         
         stdscr.clear()
         display_text(stdscr, target_text, current_text, wpm)
         stdscr.refresh()
         
+        # Break to end game when text match exactly.
+        if "".join(current_text) == target_text:
+            stdscr.nodelay(False)
+            break
+        
+        # Wait for input       
         try:
             key = stdscr.getkey()
         except:
             continue
-        
         
         # Exit if Escape is pressed. 
         if ord(key) == 27: 
@@ -67,6 +72,13 @@ def main(stdscr):
     curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
    
     start_screen(stdscr)
-    wpm_test(stdscr)
+    
+    while True:
+        wpm_test(stdscr)
+        stdscr.nodelay(False)
+        stdscr.addstr(2,0, "You completed the text! Press any key to continue. . .")
+        key = stdscr.getkey()
+        if ord(key) == 27:
+            break
     
 wrapper(main)
