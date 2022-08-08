@@ -10,7 +10,7 @@ def start_screen(stdscr):
     stdscr.refresh()
     stdscr.getkey()
 
-# Display the current typed text on top of the target text, also display the WPM / Score.
+# Display the currently typed text on top of the target text, also display the WPM / Score.
 def display_text(stdscr, target, current, wpm=0):
     stdscr.addstr(target)
     stdscr.addstr(1,0, f"WPM: {wpm}")
@@ -24,7 +24,7 @@ def display_text(stdscr, target, current, wpm=0):
         stdscr.addstr(0, i, char, textcolor)
             
 
-# Typging game functionality
+# Typing game functionality
 def wpm_test(stdscr):
     target_text = "Hello world this is a test!"
     current_text = []
@@ -32,7 +32,7 @@ def wpm_test(stdscr):
     start_time = time.time()
     stdscr.nodelay(True)
         
-    # Each time a key is entered, evalutate and display it. At the end calculate the score/speed.
+    # Each time a key is entered, evaluate and display it. At the end calculate the score/speed.
     while True:
         time_elapsed = max(time.time() - start_time, 1)
         wpm = round((len(current_text) / (time_elapsed / 60) ) / 5)
