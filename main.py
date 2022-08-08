@@ -14,7 +14,13 @@ def display_text(stdscr, target, current, wpm=0):
     stdscr.addstr(target)
 
     for i, char in enumerate(current):
-        stdscr.addstr(0, i, char, curses.color_pair(1))
+        correct_char = target[i]
+        textcolor = curses.color_pair(1) # Green text       
+        if char != correct_char:            
+            textcolor = curses.color_pair(2) # Red text
+        
+        stdscr.addstr(0, i, char, textcolor)
+            
 
 # Typging game functionality
 def wpm_test(stdscr):
@@ -27,10 +33,12 @@ def wpm_test(stdscr):
         display_text(stdscr, target_text, current_text)
         stdscr.refresh()
         
-        key = stdscr.getkey()        
-        if ord(key) == 27:
-            break   #Exit if Escape is pressed.
-        if key in ("KEY_BACKSPACE", "\b", "\x7f"):
+        key = stdscr.getkey()
+        # Exit if Escape is pressed. 
+        if ord(key) == 27: 
+            break
+        # Backspace functionality
+        if key in ("KEY_BACKSPACE", "\b", "\x7f"):  
             if len(current_text) > 0:
                 current_text.pop()
         else:
